@@ -1,9 +1,9 @@
-get_player <- function(id, type, api_key)
+get_player_data <- function(id, id_type)
 {
     base_url <- "https://euw1.api.riotgames.com/lol/summoner/v4/summoners/"
     
     # Case handling for name/ puuid/ encryptedSummonerId querying
-    switch(type,
+    switch(id_type,
            "name" = api_spec <- "by-name/",
            "puuid" = api_spec <- "by-puuid/",
            "encryptedSummonerId" = api_spec <- "")
@@ -11,9 +11,9 @@ get_player <- function(id, type, api_key)
     # Execution
     final_url <- paste0(base_url, api_spec, id)
     player_data <- httr::GET(final_url, 
-                             add_headers("X-Riot-Token" = api_key))
+                             add_headers("X-Riot-Token" = Sys.getenv("RIOT_API_KEY")))
     
-    Sys.sleep(1.2)
+    # Sys.sleep(1.2)
     
     # Flag if requests receives an error code
     if(player_data$status_code == 429)

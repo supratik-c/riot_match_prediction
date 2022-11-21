@@ -8,9 +8,11 @@ update_items <- function(conn)
         mutate(name = ifelse(grepl(".name$", name), "name", "gold")) %>% 
         pivot_wider()
     
-    items <- data.frame(id = id,
+    items <- data.frame(id = as.numeric(id),
                         name = unlist(data$name),
-                        gold = unlist(data$gold)) 
+                        gold = as.numeric(unlist(data$gold)))
+    
+    items <- filter(items, gold != 0)
     
     dbWriteTable(conn,
                  name = "D_ITEMS",

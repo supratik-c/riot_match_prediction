@@ -11,7 +11,7 @@ update_champions <- function(conn)
         mutate(name = ifelse(grepl(".key$", name), "key", "name")) %>% 
         pivot_wider()
     
-    champions <- data.frame(id = unlist(champs_flat$key), 
+    champions <- data.frame(id = as.numeric(unlist(champs_flat$key)), 
                             name = unlist(champs_flat$name))
     
     # Update champions database in azure
