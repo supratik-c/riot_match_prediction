@@ -1,4 +1,4 @@
-get_player_data <- function(id, id_type)
+get_player_account <- function(id, id_type)
 {
     base_url <- "https://euw1.api.riotgames.com/lol/summoner/v4/summoners/"
     
