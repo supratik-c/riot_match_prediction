@@ -8,7 +8,7 @@ riot_get <- function(url)
         prev_req_time <<- Sys.time()
         data <- httr::GET(url, add_headers("X-Riot-Token" = Sys.getenv("RIOT_API_KEY")))
         
-        if(data$status_code != 200) stop(paste0("Error. Status Code:", data$status_code))
+        if(data$status_code != 200) stop(paste("Error. Status Code:", data$status_code))
         return(data)
         
         
@@ -23,7 +23,8 @@ riot_get <- function(url)
         prev_req_time <<- Sys.time()
         data <- httr::GET(url,
                           add_headers("X-Riot-Token" = Sys.getenv("RIOT_API_KEY")))
-        if(data$status_code != 200) stop(paste0("Error. Status Code:", data$status_code))
+        if(data$status_code != 200) stop(paste("Error. Status Code:", data$status_code))
         return(data)
     }
+    
 }

@@ -1,2 +1,6 @@
 # Riot Match Prediction
-Repo for MSc project to build match prediction model using Riot API
+This repo stores code for building a prediction model for League of Legends match outcomes, using data from the official Riot Games API.
+
+
+## Directory Structure
+

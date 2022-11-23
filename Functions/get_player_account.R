@@ -10,20 +10,7 @@ get_player_account <- function(id, id_type)
     
     # Execution
     final_url <- paste0(base_url, api_spec, id)
-    player_data <- httr::GET(final_url, 
-                             add_headers("X-Riot-Token" = Sys.getenv("RIOT_API_KEY")))
-    
-    # Sys.sleep(1.2)
-    
-    # Flag if requests receives an error code
-    if(player_data$status_code == 429)
-    {
-        Sys.sleep(10)
-    }
-    else if(player_data$status_code != 200)
-    {
-        stop("Error. Status Code:", player_data$status_code)
-    }
+    player_data <- riot_get(final_url)
     
     # Return data if query successful
     return(fromJSON(rawToChar(player_data$content)))
