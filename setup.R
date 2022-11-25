@@ -5,7 +5,7 @@ mapply(source, list.files("Functions", recursive = TRUE, full.names = TRUE))
 
 # Database
 riot_db <- dbConnect(odbc(),
-                     Driver = "ODBC Driver 17 for SQL Server",
+                     Driver = "ODBC Driver 18 for SQL Server",
                      Server = "supratik.database.windows.net",
                      Database = "riot_data",
                      UID = Sys.getenv("AZURE_USER"),
@@ -37,4 +37,4 @@ update_ranks(riot_db)
 
 
 # API Key Setter
-Sys.setenv("RIOT_API_KEY" = "RGAPI-6d8f999c-c849-48da-8f4d-19c6118940b0")
+Sys.setenv("RIOT_API_KEY" = "")

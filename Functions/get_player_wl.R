@@ -29,6 +29,3 @@ get_player_wl <- function(encryptedSummonerId)
     return(data)
     
 }
-
-t <- list()
-is_empty(t)
