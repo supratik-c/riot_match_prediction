@@ -3,6 +3,15 @@ get_streak <- function(puuid, matchId)
     
     # Create tibble of last 100 matches
     matches <- get_player_matches(puuid, queue = "all")
+    if(!(matchId %in% matches)){
+        data <- tibble(
+            puuid = puuid,
+            streak = 0
+        )
+        
+        return(data)
+    }
+    
     match_tbl <- tibble(
         "id" = seq(length(matches)),
         "matchId" = matches
@@ -53,47 +62,3 @@ get_streak <- function(puuid, matchId)
     return(data)
 
 }
-
-# # Tests
-# test_streak <- get_streak(test_puuid, test_match)
-# 
-# 
-# test_puuid <- player_puuid
-# test_match <- recent_matchId
-# matches <- get_player_matches(test_puuid, queue = "all")
-# wins <- c()
-# for (match in matches){
-#     win <- get_match(match)$info$participants %>%
-#         filter(puuid == test_puuid) %>%
-#         pull(win)
-# 
-#     wins <- c(wins, win)
-# }
-# match_res <- tibble(
-#     id = matches,
-#     result = wins
-# )
-# 
-# test_mid <- matches[1]
-# test_streak <- matches[2:10]
-# 
-# test_init <- get_match(test_mid)$info$participants %>%
-#     filter(puuid == test_puuid) %>%
-#     pull(win)
-# 
-# test_ctr <- ifelse(test_init, 1, -1)
-# 
-# for (i in 1:length(test_streak)) {
-#     next_match <- get_match(test_streak[i])$info$participants %>%
-#         filter(puuid == test_puuid) %>%
-#         pull(win)
-# 
-#     if (next_match != test_init) {
-#         break
-#     } else {
-#         test_ctr <- ifelse(next_match, test_ctr + 1, test_ctr - 1)
-#     }
-# 
-#     print(paste0("Streak:", test_ctr))
-# 
-# }

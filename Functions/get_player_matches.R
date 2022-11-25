@@ -11,7 +11,7 @@ get_player_matches <- function(player_puuid, queue = 420, start = 0, count = 100
                        queue_url,
                        "&start=",
                        start,
-                       "&count",
+                       "&count=",
                        count,
                        sep = "")
     

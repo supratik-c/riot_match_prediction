@@ -16,8 +16,8 @@ riot_get <- function(url)
         
         # Sleep until 1.2 seconds have elapsed
         time_since_req <- Sys.time() - prev_req_time
-        if (time_since_req < 1.2) {
-            Sys.sleep(1.2 - time_since_req)
+        if (time_since_req < 1.4) {
+            Sys.sleep(1.4 - time_since_req)
         }
         
         prev_req_time <<- Sys.time()
