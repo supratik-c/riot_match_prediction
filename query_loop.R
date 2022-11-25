@@ -101,7 +101,7 @@ for(i in 1:30){
     
     # Write to csv
     write_csv(data_final, "data/match_data.csv", append = T)
-    
+    print(paste("Match written: ", recent_matchId))
 
 }
 
