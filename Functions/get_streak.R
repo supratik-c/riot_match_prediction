@@ -28,7 +28,17 @@ get_streak <- function(puuid, matchId)
     
     
     # Set last match result as reference point (win or loss)
-    init_result <- get_match(prev_matches[1])$info$participants %>% 
+    init_result <- get_match(prev_matches[1])$info$participants 
+    if(!(puuid %in% init_result$puuid)){
+        data <- tibble(
+            puuid = .env$puuid,
+            streak = 0
+        )
+        
+        return(data)
+    }
+    
+    init_result <- init_result %>% 
         filter(puuid == .env$puuid) %>% 
         pull(win)
     
@@ -62,3 +72,4 @@ get_streak <- function(puuid, matchId)
     return(data)
 
 }
+

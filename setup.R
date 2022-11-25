@@ -37,5 +37,4 @@ update_ranks(riot_db)
 
 
 # API Key Setter
-Sys.setenv("RIOT_API_KEY" = "")
-
+Sys.setenv("RIOT_API_KEY" = "RGAPI-6d8f999c-c849-48da-8f4d-19c6118940b0")

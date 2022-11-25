@@ -1,6 +1,12 @@
-query_loop <- function(){
+for(i in 1:100){
     
 }
+
+
+
+# Add query time
+if(!exists("recordTime")) recordTime <- c()
+startTime <- Sys.time()
 
 # Get sample match
 player_esi <- get_sample_player()
@@ -92,8 +98,12 @@ data_streaks <- merge(data_champs, streaks,
 match_timeline <- get_match_timeline(recent_matchId)
 data_final <- merge(data_streaks, match_timeline,
                     by = "puuid",
-                    all.x = T) %>% 
-    select(puuid, matchId, )
+                    all.x = T) 
+
+
+# End time
+endTime <- Sys.time()
+recordTimes <- c(recordTimes, (endTime - startTime))
 
 
 # Pivot wider to make match record
@@ -111,6 +121,4 @@ data_wide <- data_final %>%
 
 
 # Misc
-fields <- colnames(test_win)
-view(fields)
-rm(list = ls(pattern = "^test"))
+t <- get_streak("__kwe4rtbkir9iG489_vc2sX8GmZY8Bni_uLqpvMbNQF5ITx9ArOwfbVHXIgDUfAIetFz88YnU4XoA", recent_matchId)
