@@ -97,10 +97,11 @@ for(i in 1:30){
     
     # End time
     endTime <- Sys.time()
-    recordTimes <- append(recordTimes, (endTime - startTime))
+    recordTime <- endTime - startTime
     
     # Write to csv
     write_csv(data_final, "data/match_data.csv", append = T)
+    write_csv(recordTime, "data/record_times.csv", append = T)
     print(paste("Match written: ", recent_matchId))
 
 }
