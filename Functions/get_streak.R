@@ -3,6 +3,14 @@ get_streak <- function(puuid, matchId)
     
     # Create tibble of last 100 matches
     matches <- get_player_matches(puuid, queue = "all")
+    
+    # Pull next 100 matches if matchId not found
+    if(!(matchId %in% matches)){
+        next_matches <- get_player_matches(puuid, queue = "all", start = 100)
+        matches <- append(matches, next_matches)
+    }
+    
+    # Return early if match not in last 200 matches
     if(!(matchId %in% matches)){
         data <- tibble(
             puuid = puuid,
