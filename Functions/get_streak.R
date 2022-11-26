@@ -30,6 +30,16 @@ get_streak <- function(puuid, matchId)
         filter(matchId == .env$matchId) %>% 
         pull(id)
     
+    # Return if match too late in list
+    if(match_row > length(matches) - 10){
+        data <- tibble(
+            puuid = puuid,
+            streak = 0
+        )
+        
+        return(data)
+    }
+    
     prev_matches <- match_tbl %>% 
         filter(id > match_row) %>% 
         pull(matchId)
@@ -55,7 +65,19 @@ get_streak <- function(puuid, matchId)
     
     # Iterate through previous matches and count streak
     for (match in prev_matches[2:length(prev_matches)]){
-        next_match <- get_match(match)$info$participants %>% 
+        next_match <- get_match(match)$info$participants 
+        
+        # Break if puuid not found
+        if(!(puuid %in% next_match$puuid)){
+            data <- tibble(
+                puuid = .env$puuid,
+                streak = 0
+            )
+            
+            return(data)
+        }
+        
+        next_match <- next_match %>% 
             filter(puuid == .env$puuid) %>% 
             pull(win)
         
@@ -80,4 +102,3 @@ get_streak <- function(puuid, matchId)
     return(data)
 
 }
-

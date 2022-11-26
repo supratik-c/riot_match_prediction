@@ -1,9 +1,6 @@
-for(i in 1:30){
+for(j in 1:3000){
 
     # Add query time
-    if(!exists("recordTimes")){
-        recordTimes <- c()
-    } 
     startTime <- Sys.time()  
     
     # Get sample match
@@ -97,12 +94,12 @@ for(i in 1:30){
     
     # End time
     endTime <- Sys.time()
-    recordTime <- endTime - startTime
+    recordTime <- enframe(endTime - startTime)
     
     # Write to csv
     write_csv(data_final, "data/match_data.csv", append = T)
     write_csv(recordTime, "data/record_times.csv", append = T)
-    print(paste("Match written: ", recent_matchId))
+    print(paste("Match written:", recent_matchId, "Record:", j))
 
 }
 
