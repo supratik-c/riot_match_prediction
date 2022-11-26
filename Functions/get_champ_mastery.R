@@ -5,6 +5,16 @@ get_champ_mastery <- function(encryptedSummonerId, championId)
                  sep = "/")
     
     champ_data <- fromJSON(rawToChar(riot_get(url)$content))
+    if(is_empty(champ_data)) {
+        champs <- tibble(
+            championPoints = NA,
+            totalMastery = NA,
+            nchamps = NA,
+            meanMastery = NA
+        )
+        
+        return(champs)
+    }
     
     # Calculate mastery metrics
     champMastery <- champ_data %>% 
