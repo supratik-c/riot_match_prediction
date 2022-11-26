@@ -1,4 +1,4 @@
-for(j in 1:1){
+for(j in 1:3000){
 
     # Add query time
     queryTime <- tibble() 
@@ -143,21 +143,15 @@ for(j in 1:1){
     write_csv(data_final, "data/match_data.csv", append = T)
     write_csv(queryTime, "data/record_times.csv", append = T)
     print(paste("Match written:", recent_matchId, "Record:", j))
+    
+    # Write to Azure
+    dbWriteTable(riot_db,
+                 "F_MATCHES",
+                 data_final,
+                 append = T)
 
 }
 
-
-# Pivot wider to make match record
-data_wide <- data_final %>% 
-    mutate(teamId = ifelse(teamId == 100,
-                           "T1",
-                           "T2")) %>% 
-    select(-c(1, 2, 6, 7, 8)) %>% 
-    pivot_wider(
-        names_from = c(teamId, teamPosition),
-        values_from = -c(1, 3),
-        names_glue = "{teamId}_{teamPosition}_{.value}")
-    
 
 
 
