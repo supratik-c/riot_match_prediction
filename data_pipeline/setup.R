@@ -6,7 +6,7 @@ mapply(source, list.files("data_pipeline/functions", recursive = TRUE, full.name
 riot_db <- dbConnect(odbc(),
                      Driver = "ODBC Driver 18 for SQL Server",
                      Server = Sys.getenv("AZURE_SERVER"),
-                     Database = "riot_data",
+                     Database = Sys.getenv("AZURE_DB"),
                      UID = Sys.getenv("AZURE_USER"),
                      PWD = Sys.getenv("AZURE_PASS"),
                      Port = 1433,
@@ -127,7 +127,7 @@ while(TRUE) {
                  data_final,
                  append = T)
     
-    print(paste("Match written:", recent_matchId, "Record:", j))
+    
     
 }
 
