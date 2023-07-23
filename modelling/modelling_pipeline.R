@@ -69,12 +69,8 @@ lr_all_cv_metrics <- collect_metrics(lr_all_cv_results)
 lr_all <- lr_model %>% 
     fit(T1_win ~ ., data = training_set)
 
-# Write Model file
-bund <- lr_all %>% 
-    bundle()
 
-# Read existing model
-#lr_all_r <- as_parsed_model(read_yaml("models/reference_LR.yml"))
+
 
 lr_all_pred <- predict(lr_all, test_set) %>% 
     bind_cols(predict(lr_all, test_set, type = "prob")) %>% 
