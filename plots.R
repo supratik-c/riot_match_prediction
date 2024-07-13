@@ -1,3 +1,10 @@
+# Figure 4 - Correlation Plot
+final_corr_data <- cleaned_data %>% 
+    select(-c(T1_win, T1_firstBlood, T1_firstTower))
+final_corr <- round(cor(final_corr_data), 3)
+final_corr_p <- cor_pmat(final_corr_data)
+final_corrplot <- ggcorrplot(final_corr, p.mat = final_corr_p, insig = "blank")
+
 ### Confusion Matrices ----
 lr_all_cm <- conf_mat(lr_all_pred,
                       truth = .actual,
@@ -17,7 +24,7 @@ gb_all_cm <- conf_mat(gb_all_pred,
                       estimate = .pred_class)
 
 
-### ROC Charts ----
+### ROC Charts FIGURE 6 ----
 lr_all_curve <- roc_curve(lr_all_pred, truth = .actual, .pred_win) %>% 
     mutate(Model = "Logistic Regression")
 
@@ -45,7 +52,7 @@ all_auc_plot <- all_curves %>%
          caption = "ROC Curves") +
     theme_classic() +
     theme(legend.position = "top",
-          axis.text = element_text(face="bold"),
+          axis.text = element_text(face = "bold"),
           plot.caption = element_text(face = "bold", hjust = 0, size = 14),
           panel.grid.major = element_line(color = "gray"))
 all_auc_plot
@@ -53,7 +60,7 @@ all_auc_plot
 
 
 
-### Metrics Charts ----
+### Metrics Charts FIGURE 7----
 lr_all_metrics <- get_metrics(lr_all_pred, "Logistic Regression")
 
 rf_all_metrics <- get_metrics(rf_all_pred, "Random Forest")
@@ -88,7 +95,7 @@ pred_sig <- tidy(lr_model, exponentiate = T) %>%
 pred_sig
 
 
-## RF Variable Importance 
+## RF Variable Importance FIGURE 8
 vi_ <- vi(rf_final_model) %>% 
     ggplot(aes(x = Importance , y = fct_reorder(Variable, Importance))) +
     geom_bar(stat = "identity") + 
@@ -102,7 +109,11 @@ vi_
 gb_vip <- vip(gb_final_model, num_features = 10)
 gb_vip
 
-# XGB Importance
+# XGB Importance FIGURE 11
 xgb_vip <- xgboost::xgb.importance(model=xgb_final_model$fit)
-xgb_plot <- xgb.ggplot.importance(xgb_vip, top_n = 10, n_clusters = 1)
+xgb_plot <- xgb.ggplot.importance(xgb_vip, top_n = 10, n_clusters = 1) +
+    theme_classic() +
+    theme(legend.position = "none")
 xgb_plot
+
+

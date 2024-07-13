@@ -4,7 +4,10 @@ library(tidypredict)
 library(doParallel)
 library(vip)
 library(yaml)
-
+library(ranger)
+library(C50)
+library(xgboost)
+library(ggcorrplot)
 
 # Pre-Processing ----
 
@@ -13,6 +16,7 @@ doParallel::registerDoParallel(cores = 10)
 
 ## Read in data ----
 cleaned_data <- read_csv("modelling/cleaned_data.csv")
+
 
 # Set categorical variables as factors
 cleaned_data$T1_firstBlood <- as.factor(cleaned_data$T1_firstBlood)

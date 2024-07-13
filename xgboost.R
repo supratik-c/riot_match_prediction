@@ -1,46 +1,46 @@
-library(xgboost)
-
-# Cross Validation and Hyperparameter tuning ----
-xgb_spec <- boost_tree(
-    trees = 1000,
-    tree_depth = tune(), 
-    min_n = tune(),
-    loss_reduction = tune(),                     
-    sample_size = tune(), 
-    mtry = tune(),        
-    learn_rate = tune()                          
-) %>%
-    set_engine("xgboost", .num_threads = 12) %>%
-    set_mode("classification")
-
-# Workflow
-xgb_wf <- workflow() %>%
-    add_formula(T1_win ~ .) %>%
-    add_model(xgb_spec)
-
-
-# LH Hyperparameter Grid Search
-xgb_grid <- grid_latin_hypercube(
-    tree_depth(),
-    min_n(),
-    loss_reduction(),
-    sample_size = sample_prop(),
-    finalize(mtry(), training_set),
-    learn_rate(),
-    size = 30
-)
-
-
-
-# Cross Validation
-xgb_res <- tune_grid(
-    xgb_wf,
-    resamples = cv_split,
-    grid = xgb_grid,
-    control = control_grid(save_pred = TRUE)
-)
-
-xgb_best <- select_best(xgb_res, "roc_auc")
+# THIS HAS BEEN COMMENTED OUT AS THE BEST PARAMETERS ARE SET FROM LINE 53
+# CAN BE UNCOMMENTED IF HYPERPARAMETER TUNING NEEDS TO BE DONE AGAIN
+# # Cross Validation and Hyperparameter tuning ----
+# xgb_spec <- boost_tree(
+#     trees = 1000,
+#     tree_depth = tune(), 
+#     min_n = tune(),
+#     loss_reduction = tune(),                     
+#     sample_size = tune(), 
+#     mtry = tune(),        
+#     learn_rate = tune()                          
+# ) %>%
+#     set_engine("xgboost", .num_threads = 12) %>%
+#     set_mode("classification")
+# 
+# # Workflow
+# xgb_wf <- workflow() %>%
+#     add_formula(T1_win ~ .) %>%
+#     add_model(xgb_spec)
+# 
+# 
+# # LH Hyperparameter Grid Search
+# xgb_grid <- grid_latin_hypercube(
+#     tree_depth(),
+#     min_n(),
+#     loss_reduction(),
+#     sample_size = sample_prop(),
+#     finalize(mtry(), training_set),
+#     learn_rate(),
+#     size = 30
+# )
+# 
+# 
+# 
+# # Cross Validation
+# xgb_res <- tune_grid(
+#     xgb_wf,
+#     resamples = cv_split,
+#     grid = xgb_grid,
+#     control = control_grid(save_pred = TRUE)
+# )
+# 
+# xgb_best <- select_best(xgb_res, "roc_auc")
 # mtry 13
 # min_n 27
 # tree_depth 12
