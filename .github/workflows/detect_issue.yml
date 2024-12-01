@@ -1,0 +1,14 @@
+name: Project Issue Detection
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  detect_project:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.issue.project_node_id == '1' }}
+    
+    steps:
+      - name: Echo Hello World
+        run: echo "Hello World"
